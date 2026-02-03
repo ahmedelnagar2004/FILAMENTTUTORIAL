@@ -21,7 +21,9 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
+    // category icon
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'Category';
 
@@ -56,4 +58,9 @@ class CategoryResource extends Resource
             'edit' => EditCategory::route('/{record}/edit'),
         ];
     }
+    // get padge
+  public static function getNavigationBadge(): ?string
+{
+    return static::getModel()::count();
+}
 }

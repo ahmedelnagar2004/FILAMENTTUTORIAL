@@ -16,14 +16,19 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+    protected static ?int $navigationSort = 2;
+    protected static Htmlable|string|null $navigationBadgeTooltip = 'The number of published posts';
 
-    protected static ?string $recordTitleAttribute = 'Post';
+    protected static ?string $recordTitleAttribute = ' Post';
+
+    protected static ?string $navigationLabel = 'Blog';
 
     public static function form(Schema $schema): Schema
     {
@@ -55,5 +60,15 @@ class PostResource extends Resource
             'view' => ViewPost::route('/{record}'),
             'edit' => EditPost::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return Post::where('published', 1)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::count() > 2 ? 'danger' : 'success';
     }
 }
