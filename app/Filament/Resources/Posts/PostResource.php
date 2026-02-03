@@ -17,18 +17,17 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use UnitEnum;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+    protected static string|UnitEnum|null $navigationGroup = 'Content';
     protected static ?int $navigationSort = 2;
-    protected static Htmlable|string|null $navigationBadgeTooltip = 'The number of published posts';
-
-    protected static ?string $recordTitleAttribute = ' Post';
-
     protected static ?string $navigationLabel = 'Blog';
+    protected static ?string $recordTitleAttribute = ' Post';
 
     public static function form(Schema $schema): Schema
     {
@@ -70,5 +69,14 @@ class PostResource extends Resource
     public static function getNavigationBadgeColor(): ?string
     {
         return static::getModel()::count() > 2 ? 'danger' : 'success';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        if(static::getModel()::count() > 2) {
+            return 'you must publish at least 2 posts';
+        } else {
+            return 'this is a blog post good';
+        }
     }
 }
