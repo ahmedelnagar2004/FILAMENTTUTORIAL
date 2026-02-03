@@ -22,9 +22,12 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
+
     // category icon
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    // create groupe with post and category
+    protected static string|UnitEnum|null $navigationGroup = 'Content management';
+    // sort fo resource
     protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'Category';

@@ -24,10 +24,11 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Content management';
     protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Blog';
     protected static ?string $recordTitleAttribute = ' Post';
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema
     {
@@ -78,5 +79,7 @@ class PostResource extends Resource
         } else {
             return 'this is a blog post good';
         }
+ 
     }
+  
 }
